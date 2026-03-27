@@ -25,6 +25,8 @@
 - [AI 接口测试工作流](docs/ai接口测试工作流.md)
 - [使用说明](docs/使用说明.md)
 - [设计边界与风险](docs/设计边界与风险.md)
+- [Claude Code 集成指南](docs/ClaudeCode集成指南.md)
+- [Codex 集成指南](docs/Codex集成指南.md)
 
 ## 为什么这个项目
 
