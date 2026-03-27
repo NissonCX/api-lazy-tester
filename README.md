@@ -1,130 +1,229 @@
-# 接口写完了，测试的事交给 AI
+<p align="center">
+  <img src="https://api-lazy-tester.github.io/logo.png" alt="api-lazy-tester" width="200"/>
+</p>
 
-> 写接口 5 分钟，测试 2 小时？
+<h1 align="center">api-lazy-tester</h1>
 
-作为一个后端仔，你肯定遇到过这种情况：
-- 接口写完了，本地启动服务
-- 打开 Postman/Apifox
-- 一个个填参数、点发送、看结果
-- 测完一个再测下一个
-- 2 小时过去了......
+<p align="center">
+  <strong>Let AI test your APIs — because you wrote the code, not the tests.</strong>
+</p>
 
-**太累了。**
+<p align="center">
+  <a href="https://github.com/NissonCX/api-lazy-tester/stargazers">
+    <img src="https://img.shields.io/github/stars/NissonCX/api-lazy-tester?style=flat" alt="stars"/>
+  </a>
+  <a href="https://github.com/NissonCX/api-lazy-tester/releases">
+    <img src="https://img.shields.io/github/v/release/NissonCX/api-lazy-tester?include_prereleases&style=flat" alt="release"/>
+  </a>
+  <a href="https://github.com/NissonCX/api-lazy-tester/blob/main/LICENSE">
+    <img src="https://img.shields.io/github/license/NissonCX/api-lazy-tester?style=flat" alt="license"/>
+  </a>
+  <a href="https://github.com/NissonCX/api-lazy-tester/issues">
+    <img src="https://img.shields.io/github/issues/NissonCX/api-lazy-tester?style=flat" alt="issues"/>
+  </a>
+</p>
 
-于是有了 `api-lazy-tester` —— 你的接口测试小助手。
+---
 
-## 它能做什么
+## The Problem
 
-- 自动发现你新写的接口（git diff 了解一下）
-- 自动读取接口定义（OpenAPI、Controller 都能看懂）
-- 自动生成测试用例（正常用例 + 边界用例 + 负例）
-- 自动执行测试并输出报告
-
-**你只需要做两件事：**
-1. 告诉 AI："测一下我新写的接口"
-2. 给 AI 你的 token
-
-然后该喝茶喝茶，该摸鱼摸鱼 🐟
-
-## 谁会用它
-
-- 刚写完接口的后端同学
-- 不想手动测试的懒人
-- 日常需要快速验证接口的开发者
-
-## 快速开始
-
-```bash
-# 告诉 AI
-请测试我新写的接口
-Token: 你的token
-```
-
-AI 会自动跑完整个流程，最后给你一个测试报告：
+You just finished writing a new API endpoint. Now comes the tedious part:
 
 ```
-✅ POST /api/user/login - 通过 3/3
-├── 正常登录 - 200 ✓
-├── 用户名为空 - 400 ✓
-└── 密码错误 - 401 ✓
+1. Start your local server
+2. Open Postman/Apifox
+3. Fill in parameters, click send, check response
+4. Repeat for each test case...
+5. 2 hours later... 😴
 ```
 
-## 为什么不用 Postman
+**Been there. Done that. It's exhausting.**
 
-| 特性 | Postman | api-lazy-tester |
-|------|---------|-----------------|
-| 配置 | 要手动填 | AI 全自动 |
-| 测试用例 | 要手写 | AI 根据接口定义生成 |
-| 门槛 | 需要学习 | 会说话就行 |
-| 价格 | 免费/付费 | 免费开源 |
+---
 
-## 核心原则
+## The Solution
 
-- **token 你来给**：自己提供，AI 不主动要
-- **测试 AI 来跑**：你喝咖啡，它干活
-- **安全第一**：DELETE 这种危险操作需要你确认
+`api-lazy-tester` — your AI-powered API testing assistant.
 
-## 在 Claude Code 中用
+### What it does
 
-直接在 Claude Code 里告诉它：
+- 🔍 **Auto-discovers** new APIs (via git diff)
+- 📖 **Reads** OpenAPI / Controller definitions
+- 🧪 **Generates** test cases (happy path + edge cases + negative tests)
+- ⚡ **Executes** tests automatically
+- 📊 **Reports** results in a clean format
+
+### What you do
+
+1. Tell AI: "Test my new APIs"
+2. Provide your token
+
+That's it. Go grab a coffee while AI does the work. ☕
+
+---
+
+## Quick Start
+
+### In Claude Code
 
 ```
-测试我新写的接口
-Token: xxx
+test my new APIs
+Token: your_token_here
 ```
 
-或者用 skill：
+Or use the skill:
 
 ```
 /api-lazy-tester
 ```
 
-详细说明见 [skill/api-lazy-tester/SKILL.md](skill/api-lazy-tester/SKILL.md)
-
-## 在 Codex 中用
-
-Codex 已内置 Skill，直接告诉它：
+### In Codex
 
 ```
-测试我新写的接口
-Token: xxx
+test my new APIs
+Token: your_token_here
 ```
 
-或者让它先读取接口定义再测试：
+### Output Example
 
 ```
-请帮我测试刚写的用户管理接口
-Token: Bearer xxx
-BaseUrl: http://localhost:8080
+✅ POST /api/user/login - Pass 3/3
+├── Normal login - 200 ✓
+├── Empty username - 400 ✓
+└── Wrong password - 401 ✓
 ```
-
-详细说明见 [skill/codex-api-tester/SKILL.md](skill/codex-api-tester/SKILL.md)
-
-## 支持的 AI 工具
-
-| 工具 | Skill 文件 | 状态 |
-|------|------------|------|
-| Claude Code | `skill/api-lazy-tester/SKILL.md` | ✅ 可用 |
-| Codex | `skill/codex-api-tester/SKILL.md` | ✅ 可用 |
-
-## 文档
-
-- [项目介绍](docs/项目介绍.md)
-- [快速开始](docs/快速开始.md)
-- [更多示例](docs/更多示例.md)
-- [FAQ](docs/FAQ.md)
-- [Claude Code 集成](docs/ClaudeCode集成指南.md)
-- [Codex 集成](docs/Codex集成指南.md)
-
-## 技术栈
-
-- Claude Code Skill / Codex Skill
-- bash 脚本（curl 封装）
-- OpenAPI / Swagger 解析
-- Java Controller 源码解析
 
 ---
 
-写接口已经够累了，测试的事就交给 AI 吧 🚀
+## Features
 
-MIT License
+| Feature | Description |
+|---------|-------------|
+| 🤖 Auto Discovery | Finds new APIs via git diff |
+| 📖 Smart Parsing | Reads OpenAPI, Swagger, or Controller source |
+| 🧪 Auto Test Generation | Creates happy + edge + negative test cases |
+| 🔒 Security First | DELETE operations require confirmation |
+| 🔌 Universal | Works with any HTTP API |
+
+---
+
+## Installation
+
+```bash
+# Clone the repo
+git clone https://github.com/NissonCX/api-lazy-tester.git
+cd api-lazy-tester
+```
+
+---
+
+## Usage
+
+### Basic Request
+
+```bash
+./skill/api-lazy-tester/scripts/test-api.sh \
+  -m POST \
+  -u "http://localhost:8080/api/login" \
+  -t "Bearer your_token" \
+  -b '{"username":"test","password":"123456"}'
+```
+
+### With Custom Timeout
+
+```bash
+./skill/api-lazy-tester/scripts/test-api.sh \
+  -m GET \
+  -u "http://localhost:8080/api/users/1" \
+  -t "Bearer your_token" \
+  -T 60
+```
+
+### Options
+
+| Flag | Description | Example |
+|------|-------------|---------|
+| `-m` | HTTP method | GET, POST, PUT, DELETE |
+| `-u` | Full URL | https://api.example.com/api/login |
+| `-t` | Token | Bearer your_token |
+| `-b` | Request body | '{"key":"value"}' |
+| `-T` | Timeout (seconds) | 30 |
+| `-s` | Output format | json (default), simple |
+
+---
+
+## Why Not Just Use Postman?
+
+| Feature | Postman | api-lazy-tester |
+|---------|---------|-----------------|
+| Setup | Manual | AI automated |
+| Test cases | You write them | AI generates them |
+| Learning curve | Medium | Zero |
+| Price | Free/Paid | Free & Open Source |
+
+---
+
+## Supported AI Tools
+
+| Tool | Skill File | Status |
+|------|------------|--------|
+| Claude Code | `skill/api-lazy-tester/SKILL.md` | ✅ Ready |
+| Codex | `skill/codex-api-tester/SKILL.md` | ✅ Ready |
+
+---
+
+## Documentation
+
+- [Quick Start](docs/快速开始.md) — Get started in 5 minutes
+- [Usage Guide](docs/使用说明.md) — Detailed usage
+- [More Examples](docs/更多示例.md) — Advanced usage
+- [FAQ](docs/FAQ.md) — Common questions
+- [Claude Code Integration](docs/ClaudeCode集成指南.md)
+- [Codex Integration](docs/Codex集成指南.md)
+
+---
+
+## Tech Stack
+
+- Claude Code Skill / Codex Skill
+- Bash scripts (curl wrapper)
+- OpenAPI / Swagger parsing
+- Java Controller source parsing
+
+---
+
+## Core Principles
+
+- **Token is yours** — You provide, AI never asks
+- **AI does the work** — You drink coffee, it tests
+- **Safety first** — DELETE operations need your confirmation
+
+---
+
+## Contributing
+
+Contributions are welcome! Please read our [contributing guide](CONTRIBUTING.md) first.
+
+---
+
+## License
+
+MIT License — see [LICENSE](LICENSE) for details.
+
+---
+
+## Support
+
+- ⭐ Star this repo if it helps!
+- 🐛 Report bugs via [Issues](https://github.com/NissonCX/api-lazy-tester/issues)
+- 💬 Ask questions in discussions
+
+---
+
+<p align="center">
+  Made with ❤️ by developers, for developers
+</p>
+
+<p align="center">
+  <sub>API testing: Let AI handle it. You wrote the code, not the tests. 🚀</sub>
+</p>
