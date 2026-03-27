@@ -1,113 +1,35 @@
 <p align="center">
-  <img src="https://api-lazy-tester.github.io/logo.png" alt="api-lazy-tester" width="200"/>
+  <a href="https://github.com/NissonCX/api-lazy-tester">
+    <img src="https://api-lazy-tester.github.io/logo.png" alt="api-lazy-tester" width="120"/>
+  </a>
 </p>
 
 <h1 align="center">api-lazy-tester</h1>
 
 <p align="center">
-  <strong>Let AI test your APIs — because you wrote the code, not the tests.</strong>
-</p>
-
-<p align="center">
-  <a href="https://github.com/NissonCX/api-lazy-tester/stargazers">
-    <img src="https://img.shields.io/github/stars/NissonCX/api-lazy-tester?style=flat" alt="stars"/>
-  </a>
-  <a href="https://github.com/NissonCX/api-lazy-tester/releases">
-    <img src="https://img.shields.io/github/v/release/NissonCX/api-lazy-tester?include_prereleases&style=flat" alt="release"/>
-  </a>
-  <a href="https://github.com/NissonCX/api-lazy-tester/blob/main/LICENSE">
-    <img src="https://img.shields.io/github/license/NissonCX/api-lazy-tester?style=flat" alt="license"/>
-  </a>
-  <a href="https://github.com/NissonCX/api-lazy-tester/issues">
-    <img src="https://img.shields.io/github/issues/NissonCX/api-lazy-tester?style=flat" alt="issues"/>
-  </a>
+  AI-powered API testing for Claude Code & Codex
+  <br>
+  <a href="https://github.com/NissonCX/api-lazy-tester/stargazers"><img src="https://img.shields.io/github/stars/NissonCX/api-lazy-tester?style=flat&color=orange" alt="stars"></a>
+  <a href="https://github.com/NissonCX/api-lazy-tester/releases"><img src="https://img.shields.io/github/v/release/NissonCX/api-lazy-tester?include_prereleases&style=flat" alt="release"></a>
+  <a href="https://github.com/NissonCX/api-lazy-tester/blob/main/LICENSE"><img src="https://img.shields.io/github/license/NissonCX/api-lazy-tester?style=flat" alt="license"></a>
 </p>
 
 ---
 
-## The Problem
+## What is api-lazy-tester?
 
-You just finished writing a new API endpoint. Now comes the tedious part:
+`api-lazy-tester` is an AI-powered API testing workflow that automatically:
+- 🔍 Discovers new APIs via git diff
+- 📖 Reads OpenAPI / Controller definitions
+- 🧪 Generates test cases (happy path + edge cases + negative tests)
+- ⚡ Executes tests automatically
+- 📊 Reports results in a clean format
 
-```
-1. Start your local server
-2. Open Postman/Apifox
-3. Fill in parameters, click send, check response
-4. Repeat for each test case...
-5. 2 hours later... 😴
-```
-
-**Been there. Done that. It's exhausting.**
-
----
-
-## The Solution
-
-`api-lazy-tester` — your AI-powered API testing assistant.
-
-### What it does
-
-- 🔍 **Auto-discovers** new APIs (via git diff)
-- 📖 **Reads** OpenAPI / Controller definitions
-- 🧪 **Generates** test cases (happy path + edge cases + negative tests)
-- ⚡ **Executes** tests automatically
-- 📊 **Reports** results in a clean format
-
-### What you do
-
-1. Tell AI: "Test my new APIs"
-2. Provide your token
-
-That's it. Go grab a coffee while AI does the work. ☕
+**You write the code. Let AI handle the testing.**
 
 ---
 
 ## Quick Start
-
-### In Claude Code
-
-```
-test my new APIs
-Token: your_token_here
-```
-
-Or use the skill:
-
-```
-/api-lazy-tester
-```
-
-### In Codex
-
-```
-test my new APIs
-Token: your_token_here
-```
-
-### Output Example
-
-```
-✅ POST /api/user/login - Pass 3/3
-├── Normal login - 200 ✓
-├── Empty username - 400 ✓
-└── Wrong password - 401 ✓
-```
-
----
-
-## Features
-
-| Feature | Description |
-|---------|-------------|
-| 🤖 Auto Discovery | Finds new APIs via git diff |
-| 📖 Smart Parsing | Reads OpenAPI, Swagger, or Controller source |
-| 🧪 Auto Test Generation | Creates happy + edge + negative test cases |
-| 🔒 Security First | DELETE operations require confirmation |
-| 🔌 Universal | Works with any HTTP API |
-
----
-
-## Installation
 
 ```bash
 # Clone the repo
@@ -115,23 +37,45 @@ git clone https://github.com/NissonCX/api-lazy-tester.git
 cd api-lazy-tester
 ```
 
+### In Claude Code
+
+```
+/api-lazy-tester test my new APIs
+Token: your_token
+```
+
+### In Codex
+
+```
+test my new APIs
+Token: your_token
+```
+
+---
+
+## Installation
+
+### Standalone Script
+
+```bash
+# Download the test script
+curl -sL https://raw.githubusercontent.com/NissonCX/api-lazy-tester/main/skill/api-lazy-tester/scripts/test-api.sh -o test-api.sh
+chmod +x test-api.sh
+```
+
 ---
 
 ## Usage
 
-### Basic Request
-
 ```bash
+# POST request
 ./skill/api-lazy-tester/scripts/test-api.sh \
   -m POST \
   -u "http://localhost:8080/api/login" \
   -t "Bearer your_token" \
   -b '{"username":"test","password":"123456"}'
-```
 
-### With Custom Timeout
-
-```bash
+# GET request with timeout
 ./skill/api-lazy-tester/scripts/test-api.sh \
   -m GET \
   -u "http://localhost:8080/api/users/1" \
@@ -141,89 +85,52 @@ cd api-lazy-tester
 
 ### Options
 
-| Flag | Description | Example |
+| Flag | Description | Default |
 |------|-------------|---------|
-| `-m` | HTTP method | GET, POST, PUT, DELETE |
-| `-u` | Full URL | https://api.example.com/api/login |
-| `-t` | Token | Bearer your_token |
-| `-b` | Request body | '{"key":"value"}' |
+| `-m` | HTTP method | - |
+| `-u` | Request URL | - |
+| `-t` | Auth token | - |
+| `-b` | Request body | - |
 | `-T` | Timeout (seconds) | 30 |
-| `-s` | Output format | json (default), simple |
+| `-s` | Output format | json |
 
 ---
 
-## Why Not Just Use Postman?
+## Features
 
-| Feature | Postman | api-lazy-tester |
-|---------|---------|-----------------|
-| Setup | Manual | AI automated |
-| Test cases | You write them | AI generates them |
-| Learning curve | Medium | Zero |
-| Price | Free/Paid | Free & Open Source |
-
----
-
-## Supported AI Tools
-
-| Tool | Skill File | Status |
-|------|------------|--------|
-| Claude Code | `skill/api-lazy-tester/SKILL.md` | ✅ Ready |
-| Codex | `skill/codex-api-tester/SKILL.md` | ✅ Ready |
+| Feature | Description |
+|---------|-------------|
+| Auto Discovery | Finds new APIs via git diff |
+| Smart Parsing | Reads OpenAPI, Swagger, or Controller source |
+| Test Generation | Creates happy + edge + negative test cases |
+| Security First | DELETE operations require confirmation |
+| Universal | Works with any HTTP API |
 
 ---
 
 ## Documentation
 
-- [Quick Start](docs/快速开始.md) — Get started in 5 minutes
-- [Usage Guide](docs/使用说明.md) — Detailed usage
-- [More Examples](docs/更多示例.md) — Advanced usage
-- [FAQ](docs/FAQ.md) — Common questions
+- [Getting Started](docs/快速开始.md)
+- [Usage Guide](docs/使用说明.md)
+- [Examples](docs/更多示例.md)
+- [FAQ](docs/FAQ.md)
 - [Claude Code Integration](docs/ClaudeCode集成指南.md)
 - [Codex Integration](docs/Codex集成指南.md)
 
 ---
 
-## Tech Stack
-
-- Claude Code Skill / Codex Skill
-- Bash scripts (curl wrapper)
-- OpenAPI / Swagger parsing
-- Java Controller source parsing
-
----
-
-## Core Principles
-
-- **Token is yours** — You provide, AI never asks
-- **AI does the work** — You drink coffee, it tests
-- **Safety first** — DELETE operations need your confirmation
-
----
-
 ## Contributing
 
-Contributions are welcome! Please read our [contributing guide](CONTRIBUTING.md) first.
+Contributions are welcome! Please read the [contributing guide](CONTRIBUTING.md) first.
 
 ---
 
 ## License
 
-MIT License — see [LICENSE](LICENSE) for details.
-
----
-
-## Support
-
-- ⭐ Star this repo if it helps!
-- 🐛 Report bugs via [Issues](https://github.com/NissonCX/api-lazy-tester/issues)
-- 💬 Ask questions in discussions
+[MIT](LICENSE) — © 2024-present NissonCX
 
 ---
 
 <p align="center">
-  Made with ❤️ by developers, for developers
-</p>
-
-<p align="center">
-  <sub>API testing: Let AI handle it. You wrote the code, not the tests. 🚀</sub>
+  <sub>Built with ❤️ for developers who hate manual testing</sub>
 </p>
