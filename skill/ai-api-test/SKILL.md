@@ -13,6 +13,32 @@ effort: medium
 
 ## 完整工作流（自动）
 
+### Step 0: 获取 baseUrl（自动）
+
+如果用户没有提供 baseUrl，尝试自动读取：
+
+**方式 1: 从配置文件读取**
+```bash
+# 读取 application.yml 中的 server.servlet.context-path 和 server.port
+grep -E "server:(.|[\n\r])*port:" src/main/resources/application.yml
+grep -E "server:(.|[\n\r])*servlet:(.|[\n\r])*context-path:" src/main/resources/application.yml
+
+# 常见位置
+# - src/main/resources/application.yml
+# - src/main/resources/application-local.yml
+# - src/main/resources/application-dev.yml
+# - .env
+```
+
+**方式 2: 从启动类读取**
+```bash
+# 找 @SpringBootApplication 类的端口配置
+grep -r "server.port" src/main/
+```
+
+**方式 3: 默认值**
+- 如果都找不到，使用 `http://localhost:8080`
+
 ### Step 1: 发现新接口
 
 当用户说"测试新写的接口"时，首先执行：
@@ -21,8 +47,8 @@ effort: medium
 # 找出本次新增/修改的文件
 git diff --name-only HEAD~1
 
-# 或对比分支
-git diff --name-only main...HEAD
+# 或对比分支（更准确）
+git diff --name-only origin/main...HEAD
 ```
 
 找到新增的 *Controller.java 文件，重点关注。
@@ -38,7 +64,7 @@ find . -type f \( -name "openapi.yaml" -o -name "openapi.json" -o -name "swagger
 
 **优先级 2: Controller 源码**
 ```bash
-# 找到新写的 Controller
+# 找到新写的 Controller（从 git diff 结果）
 git diff --name-only HEAD~1 | grep -i controller
 
 # 读取新增的接口方法
@@ -48,7 +74,7 @@ grep -A 10 "@RequestMapping\|@GetMapping\|@PostMapping\|@PutMapping\|@DeleteMapp
 **优先级 3: DTO 源码**
 ```bash
 # 找到相关的 DTO
-git diff --name-only HEAD~1 | grep -i -E "(DTO|Entity|Request|Response)"
+git diff --name-only HEAD~1 | grep -i -E "(DTO|Entity|Request|Response|VO)"
 ```
 
 ### Step 3: 生成测试用例
@@ -94,11 +120,16 @@ ${CLAUDE_SKILL_DIR}/scripts/test-api.sh \
 └── 密码错误 - 401 ✓
 ```
 
-## 必要输入（用户必须提供）
+## 用户输入处理
 
-- `token`：Bearer Token（必须）
-- `baseUrl`：API 地址，如 http://localhost:8080
-- 可选：具体接口路径（如不提供则自动发现）
+| 用户输入 | AI 行为 |
+|----------|----------|
+| 只说"测试新接口" | 自动读取配置文件获取 baseUrl + git diff 找接口 |
+| "测试 POST /api/xxx" | 直接测指定接口 |
+| "测试 localhost:8080 的接口" | 使用用户提供的 baseUrl |
+| "测试 http://api.com 接口" | 使用用户提供的 baseUrl |
+
+**注意**: token 必须由用户提供（无法自动获取）
 
 ## 重要约束
 
