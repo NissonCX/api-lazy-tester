@@ -1,84 +1,103 @@
-# AI IDE 接口测试工作流
+# 接口写完了，测试的事交给 AI
 
-提供一套面向 AI IDE 的 Java 后端接口自动测试工作流，支持读取 Swagger/OpenAPI、Controller、DTO 生成测试用例。
+> 写接口 5 分钟，测试 2 小时？
 
-## 适用场景
+作为一个后端仔，你肯定遇到过这种情况：
+- 接口写完了，本地启动服务
+- 打开 Postman/Apifox
+- 一个个填参数、点发送、看结果
+- 测完一个再测下一个
+- 2 小时过去了......
 
-- 个人开发者日常 API 接口验证
-- AI Agent 辅助接口测试
-- 快速冒烟测试
-- 接口契约验证
+**太累了。**
 
-## 工作流核心
+于是有了 `api-lazy-tester` —— 你的接口测试小助手。
 
-```
-用户手动提供 token → AI 读取接口定义 → 生成测试用例 → 执行测试 → 输出报告
-```
+## 它能做什么
+
+- 自动发现你新写的接口（git diff 了解一下）
+- 自动读取接口定义（OpenAPI、Controller 都能看懂）
+- 自动生成测试用例（正常用例 + 边界用例 + 负例）
+- 自动执行测试并输出报告
+
+**你只需要做两件事：**
+1. 告诉 AI："测一下我新写的接口"
+2. 给 AI 你的 token
+
+然后该喝茶喝茶，该摸鱼摸鱼 🐟
+
+## 谁会用它
+
+- 刚写完接口的后端同学
+- 不想手动测试的懒人
+- 日常需要快速验证接口的开发者
 
 ## 快速开始
 
-请阅读 [docs/快速开始.md](docs/快速开始.md) - 5 分钟入门。
+```bash
+# 告诉 AI
+请测试我新写的接口
+Token: 你的token
+```
+
+AI 会自动跑完整个流程，最后给你一个测试报告：
+
+```
+✅ POST /api/user/login - 通过 3/3
+├── 正常登录 - 200 ✓
+├── 用户名为空 - 400 ✓
+└── 密码错误 - 401 ✓
+```
+
+## 为什么不用 Postman
+
+| 特性 | Postman | api-lazy-tester |
+|------|---------|-----------------|
+| 配置 | 要手动填 | AI 全自动 |
+| 测试用例 | 要手写 | AI 根据接口定义生成 |
+| 门槛 | 需要学习 | 会说话就行 |
+| 价格 | 免费/付费 | 免费开源 |
+
+## 核心原则
+
+- **token 你来给**：自己提供，AI 不主动要
+- **测试 AI 来跑**：你喝咖啡，它干活
+- **安全第一**：DELETE 这种危险操作需要你确认
+
+## 在 Claude Code 中用
+
+直接在 Claude Code 里告诉它：
+
+```
+测试我新写的接口
+Token: xxx
+```
+
+或者用 skill：
+
+```
+/api-lazy-tester
+```
+
+详细说明见 [skill/api-lazy-tester/SKILL.md](skill/api-lazy-tester/SKILL.md)
 
 ## 文档
 
 - [项目介绍](docs/项目介绍.md)
 - [快速开始](docs/快速开始.md)
 - [更多示例](docs/更多示例.md)
-- [AI 接口测试工作流](docs/ai接口测试工作流.md)
-- [使用说明](docs/使用说明.md)
 - [FAQ](docs/FAQ.md)
-- [设计边界与风险](docs/设计边界与风险.md)
-- [Claude Code 集成指南](docs/ClaudeCode集成指南.md)
-- [Codex 集成指南](docs/Codex集成指南.md)
+- [Claude Code 集成](docs/ClaudeCode集成指南.md)
 
-## 为什么这个项目
+## 技术栈
 
-传统的 API 测试工具需要手动配置，而 AI Agent 虽然能理解代码，但缺乏一套系统化的测试工作流。本项目定义了 AI Agent 执行接口测试的规范流程，让 AI 能够：
+- Claude Code Skill
+- bash 脚本（curl 封装）
+- OpenAPI / Swagger 解析
+- Java Controller 源码解析
 
-1. 读取 OpenAPI/Swagger 定义
-2. 理解 Controller 和 DTO 结构
-3. 生成合理的测试用例
-4. 执行测试并输出结构化结果
+---
 
-## 核心原则
-
-- **token 由用户提供**：不实现自动获取 token 功能
-- **先可用后增强**：V1 聚焦核心工作流
-- **强调规范而非工具**：重在定义工作流规范
-- **安全优先**：默认禁止高风险写操作
-
-## Claude Code 集成
-
-在 Claude Code 中使用此工作流：
-
-### 方式一：直接对话（推荐）
-
-在 Claude Code 中直接告诉它：
-
-```
-请测试 POST /api/user/login 接口
-Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
-BaseUrl: http://your-api-host:port
-```
-
-### 方式二：使用 skill 命令
-
-```
-/ai-api-test
-```
-
-### 方式三：配置自动启用
-
-在项目的 `.claude/settings.json` 中添加：
-
-```json
-{
-  "enabledSkills": ["ai-api-test"]
-}
-```
-
-详细说明见 [skill/ai-api-test/SKILL.md](skill/ai-api-test/SKILL.md)
-
-## License
+写接口已经够累了，测试的事就交给 AI 吧 🚀
 
 MIT License

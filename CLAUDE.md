@@ -53,16 +53,15 @@ AI IDE 接口测试工作流 - 一个定义 AI Agent 如何执行 Java 后端接
 
 ## 工具集成
 
-当用户请求测试接口时，使用 skill/ai-api-test/ 中的工具：
+当用户请求测试接口时，使用 skill/api-lazy-tester/ 中的工具：
 
 - **SKILL.md**：skill 定义文件
 - **scripts/test-api.sh**：HTTP 请求执行脚本
 - **scripts/find-openapi.sh**：OpenAPI 文件查找脚本
-- **examples/demo-api.yaml**：示例 OpenAPI 文件
 
 调用方式：
 ```bash
-./skill/ai-api-test/scripts/test-api.sh -m POST -u "http://your-api-host:port/api/login" -t "Bearer xxx" -b '{"username":"test"}'
+./skill/api-lazy-tester/scripts/test-api.sh -m POST -u "http://your-api-host:port/api/login" -t "Bearer xxx" -b '{"username":"test"}'
 ```
 - [使用说明](docs/使用说明.md) - 使用前阅读
 - [设计边界与风险](docs/设计边界与风险.md) - 了解限制

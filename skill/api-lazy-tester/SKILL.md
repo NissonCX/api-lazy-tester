@@ -1,13 +1,13 @@
 ---
-name: ai-api-test
-description: AI 接口测试 - 测试刚写好的 Java 后端 API 接口。触发：用户请求测试接口、测试新写的接口、接口测试
+name: api-lazy-tester
+description: 接口测试 - 帮懒人测试接口。触发：用户请求测试接口、测试新写的接口
 argument-hint: [描述要测试的接口或模块]
 disable-model-invocation: true
 allowed-tools: Bash, Read, Glob, Grep
 effort: medium
 ---
 
-# AI 接口测试工作流
+# 接口测试，交给 AI
 
 当用户请求测试接口时，按以下流程执行。
 
