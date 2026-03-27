@@ -1,18 +1,12 @@
-<p align="center">
-  <a href="https://github.com/NissonCX/api-lazy-tester">
-    <img src="https://api-lazy-tester.github.io/logo.png" alt="api-lazy-tester" width="120"/>
-  </a>
-</p>
+# api-lazy-tester
 
-<h1 align="center">api-lazy-tester</h1>
+[English](README.md) | [简体中文](README-zh.md)
 
-<p align="center">
-  面向 Claude Code & Codex 的 AI 接口测试工具
-  <br>
-  <a href="https://github.com/NissonCX/api-lazy-tester/stargazers"><img src="https://img.shields.io/github/stars/NissonCX/api-lazy-tester?style=flat&color=orange" alt="stars"></a>
-  <a href="https://github.com/NissonCX/api-lazy-tester/releases"><img src="https://img.shields.io/github/v/release/NissonCX/api-lazy-tester?include_prereleases&style=flat" alt="release"></a>
-  <a href="https://github.com/NissonCX/api-lazy-tester/blob/main/LICENSE"><img src="https://img.shields.io/github/license/NissonCX/api-lazy-tester?style=flat" alt="license"></a>
-</p>
+> 面向 Claude Code 和 Codex 的 AI 接口测试工具
+
+[![stars](https://img.shields.io/github/stars/NissonCX/api-lazy-tester?style=flat&color=orange)](https://github.com/NissonCX/api-lazy-tester/stargazers)
+[![release](https://img.shields.io/github/v/release/NissonCX/api-lazy-tester?include_prereleases&style=flat)](https://github.com/NissonCX/api-lazy-tester/releases)
+[![license](https://img.shields.io/github/license/NissonCX/api-lazy-tester?style=flat)](https://github.com/NissonCX/api-lazy-tester/blob/main/LICENSE)
 
 ---
 
@@ -131,6 +125,4 @@ chmod +x test-api.sh
 
 ---
 
-<p align="center">
-  <sub>用 ❤️ 开发，为开发者服务</sub>
-</p>
+为讨厌手工测试的开发者而做。
