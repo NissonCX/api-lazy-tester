@@ -48,18 +48,20 @@
 
 在 Claude Code 中使用此工作流：
 
-### 方式一：直接对话
+### 方式一：直接对话（推荐）
+
+在 Claude Code 中直接告诉它：
 
 ```
 请测试 POST /api/user/login 接口
 Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
-BaseUrl: http://localhost:8080
+BaseUrl: http://your-api-host:port
 ```
 
 ### 方式二：使用 skill 命令
 
 ```
-/skill ai-api-test
+/ai-api-test
 ```
 
 ### 方式三：配置自动启用
@@ -72,7 +74,7 @@ BaseUrl: http://localhost:8080
 }
 ```
 
-详细说明见 [skill/SKILL.md](skill/SKILL.md)
+详细说明见 [skill/ai-api-test/SKILL.md](skill/ai-api-test/SKILL.md)
 
 ## License
 

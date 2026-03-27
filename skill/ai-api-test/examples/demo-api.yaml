@@ -1,0 +1,137 @@
+# 示例 OpenAPI 文件
+# 这是一个模拟的 API 文档，用于理解工作流
+
+openapi: 3.0.3
+info:
+  title: 示例用户管理 API
+  version: 1.0.0
+  description: 用于测试的示例 API
+
+servers:
+  - url: http://localhost:8080
+    description: 本地开发环境
+  - url: https://api.example.com
+    description: 生产环境
+
+paths:
+  /api/user/login:
+    post:
+      summary: 用户登录
+      operationId: login
+      tags:
+        - 用户模块
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - username
+                - password
+              properties:
+                username:
+                  type: string
+                  description: 用户名
+                  example: test
+                password:
+                  type: string
+                  description: 密码
+                  example: 123456
+      responses:
+        '200':
+          description: 登录成功
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 0
+                  message:
+                    type: string
+                    example: success
+                  data:
+                    type: object
+                    properties:
+                      token:
+                        type: string
+                      userId:
+                        type: integer
+        '400':
+          description: 参数错误
+        '401':
+          description: 用户名或密码错误
+
+  /api/user/{id}:
+    get:
+      summary: 获取用户详情
+      operationId: getUserById
+      tags:
+        - 用户模块
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          example: 1
+      responses:
+        '200':
+          description: 成功
+        '404':
+          description: 用户不存在
+
+  /api/user:
+    post:
+      summary: 创建用户
+      operationId: createUser
+      tags:
+        - 用户模块
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - username
+                - password
+                - email
+              properties:
+                username:
+                  type: string
+                  minLength: 2
+                  maxLength: 20
+                password:
+                  type: string
+                  minLength: 6
+                email:
+                  type: string
+                  format: email
+      responses:
+        '200':
+          description: 创建成功
+        '400':
+          description: 参数错误
+
+  /api/user/{id}:
+    delete:
+      summary: 删除用户
+      operationId: deleteUser
+      tags:
+        - 用户模块
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: 删除成功
+        '403':
+          description: 无权限
+        '404':
+          description: 用户不存在
