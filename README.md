@@ -81,6 +81,32 @@ Token: xxx
 
 详细说明见 [skill/api-lazy-tester/SKILL.md](skill/api-lazy-tester/SKILL.md)
 
+## 在 Codex 中用
+
+Codex 已内置 Skill，直接告诉它：
+
+```
+测试我新写的接口
+Token: xxx
+```
+
+或者让它先读取接口定义再测试：
+
+```
+请帮我测试刚写的用户管理接口
+Token: Bearer xxx
+BaseUrl: http://localhost:8080
+```
+
+详细说明见 [skill/codex-api-tester/SKILL.md](skill/codex-api-tester/SKILL.md)
+
+## 支持的 AI 工具
+
+| 工具 | Skill 文件 | 状态 |
+|------|------------|------|
+| Claude Code | `skill/api-lazy-tester/SKILL.md` | ✅ 可用 |
+| Codex | `skill/codex-api-tester/SKILL.md` | ✅ 可用 |
+
 ## 文档
 
 - [项目介绍](docs/项目介绍.md)
@@ -88,10 +114,11 @@ Token: xxx
 - [更多示例](docs/更多示例.md)
 - [FAQ](docs/FAQ.md)
 - [Claude Code 集成](docs/ClaudeCode集成指南.md)
+- [Codex 集成](docs/Codex集成指南.md)
 
 ## 技术栈
 
-- Claude Code Skill
+- Claude Code Skill / Codex Skill
 - bash 脚本（curl 封装）
 - OpenAPI / Swagger 解析
 - Java Controller 源码解析

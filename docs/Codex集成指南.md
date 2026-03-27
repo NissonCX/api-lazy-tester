@@ -4,92 +4,72 @@
 
 ## 前提条件
 
-Codex 是 OpenAI 推出的 AI 编程工具，与 Claude Code 类似但基于 OpenAI 模型。
+- Codex 已安装并配置
+- 项目已克隆到本地
 
-## 集成方式
+## 快速开始
 
-### 方式一：使用 OpenAI YAML 格式
+### 方式一：使用内置 Skill（推荐）
 
-本项目已提供 `skill/agents/openai.yaml`，可以将此配置导入 Codex。
+Codex 已自动加载 `skill/codex-api-tester/SKILL.md`，可以直接使用：
 
-### 方式二：配置自定义指令
-
-在 Codex 项目中配置自定义指令，让它读取工作流规范：
-
-1. 找到 Codex 的自定义指令配置
-2. 添加以下内容：
-
-```markdown
-## 接口测试工作流
-
-当用户要求测试接口时，执行以下工作流：
-1. 读取项目的 OpenAPI/Swagger 文件
-2. 定位要测试的接口
-3. 生成测试用例
-4. 执行测试
-5. 输出 JSON 格式报告
-
-参考规范：docs/ai接口测试工作流.md
 ```
+测试我新写的接口
+Token: Bearer xxx
+BaseUrl: http://localhost:8080
+```
+
+### 方式二：导入 Agent 配置
+
+复制 `skill/codex-api-tester/agent.yaml` 内容到 Codex 的自定义指令中：
+
+1. 打开 Codex 设置 → Custom Instructions
+2. 粘贴 `agent.yaml` 内容
+3. 保存并重新加载项目
 
 ### 方式三：直接对话
 
 ```
-测试 POST /api/user/login 接口
+测试 POST /api/user/login
 Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 BaseUrl: http://localhost:8080
 ```
 
-## OpenAI YAML 配置
+## 文件说明
 
-本项目提供的 `skill/agents/openai.yaml` 包含：
-
-- skill 名称和描述
-- 使用说明
-- 核心约束
-- conversation starters
-
-### 如何使用 YAML
-
-1. 复制 `skill/agents/openai.yaml` 内容
-2. 在 Codex 中创建新的 custom instructions
-3. 粘贴配置内容
+| 文件 | 用途 |
+|------|------|
+| `skill/codex-api-tester/SKILL.md` | Codex Skill 定义 |
+| `skill/codex-api-tester/agent.yaml` | Agent 配置文件 |
+| `skill/codex-api-tester/instructions.md` | 详细使用说明 |
 
 ## 与 Claude Code 的区别
 
 | 特性 | Claude Code | Codex |
 |------|-------------|-------|
-| Skill 格式 | JSON | YAML |
-| 配置位置 | .claude/settings.json | 自定义指令 |
-| 触发方式 | /skill 命令 | 自定义指令 |
+| Skill 格式 | YAML (SKILL.md) | YAML (SKILL.md) |
+| disable-model-invocation | true | false |
+| 执行方式 | 直接调用脚本 | 直接调用脚本 |
 
 ## 测试验证
 
-在 Codex 中测试：
-
-```markdown
-请测试登录接口
-Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
-BaseUrl: http://localhost:8080
+```bash
+# 快速验证脚本可用
+./skill/api-lazy-tester/scripts/test-api.sh \
+  -m GET \
+  -u "https://jsonplaceholder.typicode.com/posts/1" \
+  -t "test"
 ```
-
-预期行为：
-1. Codex 读取 openapi.yaml
-2. 找到 /api/user/login 接口
-3. 生成 3-4 个测试用例
-4. 执行测试
-5. 输出 JSON 报告
 
 ## 常见问题
 
 ### Q：Codex 不执行测试？
 
-确保自定义指令已生效，尝试重新加载项目。
+确保在 Custom Instructions 中正确配置了 agent.yaml 内容。
 
 ### Q：如何验证配置？
 
-可以在 Codex 中输入：
-
+在 Codex 中输入：
 ```
 请告诉我如何测试 POST /api/user/login 接口
 ```
