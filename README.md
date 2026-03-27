@@ -42,6 +42,36 @@
 - **强调规范而非工具**：重在定义工作流规范
 - **安全优先**：默认禁止高风险写操作
 
+## Claude Code 集成
+
+在 Claude Code 中使用此工作流：
+
+### 方式一：直接对话
+
+```
+请测试 POST /api/user/login 接口
+Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+BaseUrl: http://localhost:8080
+```
+
+### 方式二：使用 skill 命令
+
+```
+/skill ai-api-test
+```
+
+### 方式三：配置自动启用
+
+在项目的 `.claude/settings.json` 中添加：
+
+```json
+{
+  "enabledSkills": ["ai-api-test"]
+}
+```
+
+详细说明见 [skill/SKILL.md](skill/SKILL.md)
+
 ## License
 
 MIT License

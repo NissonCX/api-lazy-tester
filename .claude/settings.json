@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git)**",
+      "Read**",
+      "Glob**",
+      "Grep**",
+      "WebFetch**",
+      "WebSearch**"
+    ],
+    "deny": [
+      "Write**"
+    ]
+  },
+  "enabledSkills": [
+    "ai-api-test"
+  ],
+  "env": {
+    "DEFAULT_BASE_URL": "http://localhost:8080"
+  }
+}

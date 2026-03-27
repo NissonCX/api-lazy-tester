@@ -83,6 +83,38 @@ BaseUrl: http://localhost:8080
 - 不支持并发测试（V1）
 - 不支持定时任务（V1）
 
+## Claude Code 集成
+
+### 方式一：使用 skill 命令
+
+在 Claude Code 中可以直接调用此 skill：
+
+```
+/skill ai-api-test
+```
+
+### 方式二：配置自动启用
+
+在项目的 `.claude/settings.json` 中添加：
+
+```json
+{
+  "enabledSkills": ["ai-api-test"]
+}
+```
+
+### 方式三：直接使用
+
+当你在 Claude Code 中工作，直接告诉它：
+
+```
+请测试 POST /api/user/login 接口
+Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+BaseUrl: http://localhost:8080
+```
+
+Claude Code 会读取项目中的 `docs/ai接口测试工作流.md` 了解工作流规范。
+
 ## 版本
 
 - V1：核心工作流，基础测试用例生成
